@@ -91,4 +91,13 @@ router
     else next();
   });
 
+
+// /users/:id/comments -- Retrieves comments made by the user with the specified id.
+
+router.get("/:id/comments", (req, res) => {
+  const userComments = comments.filter(comment => comment.userId == req.params.id);
+  res.json(userComments);  
+})
+
+
 module.exports = router;

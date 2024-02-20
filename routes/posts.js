@@ -89,4 +89,11 @@ router
     else next();
   });
 
+//  /posts/:id/comments  -- Retrieves all comments made on the post with the specified id.
+
+router.get("/:id/comments", (req, res) => {
+  const postComments = comments.filter(comment => comment.postId == req.params.id);
+  res.json(postComments);  
+})
+
 module.exports = router;
