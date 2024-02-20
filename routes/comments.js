@@ -54,9 +54,32 @@ router
         if (index != -1) {
             comments.splice(index, 1);
             res.json({ message: "The comment has been deleted." });
-        } esle {
+        } else {
             res.status(404).json({ message: "No comment found."});
         }
     });
+
+
+// /comments?userId=<VALUE>  --  Retrieves comments by the user with the specified userId.
+
+router.get("/", (req, res) => {
+    if (req.query.userId) {         // filtering comments based on userId
+        const userComments = comments.filter(comment => comment.userId == req.query.userIdid);
+        res.json(userComments);
+    } else {
+        res.status(404).json({ message: "No comment found for this user."});
+    }
+});
+
+// /comments?postId=<VALUE>  --  Retrieves posts by the user with the specified userId.
+
+router.get("/", (req, res) => {
+    if (req.query.postId) {         // filtering comments based on userId
+        const postComments = comments.filter(comment => comment.postId == req.query.postId);
+        res.json(postComments);
+    } else {
+        res.status(404).json({ message: "No comment found for this post."});
+    }
+});
 
 module.exports = router;
