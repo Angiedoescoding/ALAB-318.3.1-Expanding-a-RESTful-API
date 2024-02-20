@@ -4,6 +4,16 @@ const router = express.Router();
 const users = require("../data/users");
 const error = require("../utilities/error");
 
+
+// GET /api/users/:id/posts -- Retrieves all posts by a user with the specified id.
+router
+.get("/:id/posts", (req, res, next) => {
+  const allUserPosts = posts.filter(post => post.userId == req.params.id);
+  res.json(allUserPosts);
+  next(error(400, "No posts found for this user."));
+})
+
+
 router
   .route("/")
   .get((req, res) => {

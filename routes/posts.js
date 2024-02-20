@@ -31,6 +31,18 @@ router
     } else next(error(400, "Insufficient Data"));
   });
 
+
+// GET /api/posts?userId=<VALUE> -- Retrieves all posts by a user with the specified postId.
+router
+  .get("/",(req, res) => {
+    if (req.query.userId) {
+      const indivUserPosts = posts.filter(post => post.userId == req.query.userId)
+      res.json(indivUserPosts);
+    } else {
+      res.json(posts);
+    }
+  })
+
 router
   .route("/:id")
   .get((req, res, next) => {
