@@ -10,7 +10,7 @@ router
 .get("/:id/posts", (req, res, next) => {
   const allUserPosts = posts.filter(post => post.userId == req.params.id);
   res.json(allUserPosts);
-  next(error(400, "No posts found for this user."));
+  next(error(404, "No posts found for this user."));
 })
 
 

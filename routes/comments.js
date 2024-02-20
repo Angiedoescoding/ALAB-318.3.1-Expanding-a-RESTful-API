@@ -24,4 +24,39 @@ router.post("/", (req, res, next) => {
     res.json(newComment)
 });
 
+// /comments/:id  -- Retrieves the comment with the specified id;  update a comment with the specified id with a new body; delete a comment with the specified id. -- GET, PATCH, DELETE
+
+router
+    .route("/:id")
+    .get((req, res, next) => {
+        const comment = comments.filter(comment => comment.id == req.params.id);
+        if (comment) {
+            res.json(comment);
+        } else {
+            res.status(404).json({ message: "No comment found from this user." });
+        }
+    })
+
+    .patch((req, res, next) => {
+        const { body } = req.body;
+        const comment = comments.find(comment => comment.id == req.params.id);
+        if (comment) {
+            comment.body = body;
+            res.json(comment);
+        } else {
+            res.status(404).json({ message: "No comment found." })
+        }
+    })
+
+
+    .delete((req, res, next) => {
+        const index = comments.findIndex(comment => comment.id == res.params.id);
+        if (index != -1) {
+            comments.splice(index, 1);
+            res.json({ message: "The comment has been deleted." });
+        } esle {
+            res.status(404).json({ message: "No comment found."});
+        }
+    });
+
 module.exports = router;
